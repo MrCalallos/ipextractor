@@ -1,23 +1,26 @@
+#Script published by Kalash0
+#u need the scapy libary and npcap or this will not work :)
+
 from scapy.all import *
 
-target_ip = '192.168.1.1/24' #escanea ips desde 192.168.1 hasta 192.168.1.255
+target_ip = '192.168.1.1/24' #scan ip from 192.168.1 from 192.168.1.255
 
-#crear arp
+#create arp
 
-#2 capa ARP
+#2 layer ARP
 arp = ARP(pdst=target_ip)#IP
 
 
-#3 capa ARP
-ether = Ether(dst="ff:ff:ff:ff:ff:ff")#Extraer MAC
+#3 layer ARP
+ether = Ether(dst="ff:ff:ff:ff:ff:ff")#Extract MAC
 
-paquete = ether/arp
+packet = ether/arp
 
-respuesta = srp(paquete,timeout=2,verbose=0)[0]
+answer= srp(packet,timeout=2,verbose=0)[0]
 
 clients = []
 
-for sent,received in respuesta:
+for sent,received in answer:
     clients+=[[received.psrc,received.hwsrc]]
     
 total_ips = len(clients)
